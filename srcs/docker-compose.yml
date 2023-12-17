@@ -22,9 +22,12 @@ services:
     container_name: mariadb
     image: mariadb
     environment:
-      - 
+      - MARIADB_DATABASE = ${MARIADB_DATABASE}
+      - MARIADB_USER = ${MARIADB_USER}
+      - MARIADB_PASSWORD = ${MARIADB_PASSWORD}
+      - MARIADB_ROOT_PASSWORD = ${MARIADB_ROOT_PASSWORD}
     volumes:
-      - 
+      - ${DATA_ROOT}/mariadb:/var/lib/mysql
     restart: unless-stopped
 
 networks:
