@@ -1,0 +1,32 @@
+version: "3.8"
+
+name: inception
+
+services:
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    ports:
+      - 443:443
+    environment:
+      - NGINX_HOST = ${NGINX_HOST}
+      - NGINX_PORT = ${NGINX_PORT}
+    volumes:
+      - ${DATA_ROOT}/wordpress:/var/www/html
+      - ${DATA_ROOT}/nginx/conf:/etc/nginx/conf.d
+      - ${DATA_ROOT}/nginx/cert:/etc/nginx/ssl
+    restart: unless-stopped
+
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    environment:
+      - 
+    volumes:
+      - 
+    restart: unless-stopped
+
+networks:
+  default:
+    name: inception-net
