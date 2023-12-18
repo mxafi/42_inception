@@ -9,8 +9,8 @@ services:
     ports:
       - 443:443
     environment:
-      - NGINX_HOST = ${NGINX_HOST}
-      - NGINX_PORT = ${NGINX_PORT}
+      - NGINX_HOST=${NGINX_HOST}
+      - NGINX_PORT=${NGINX_PORT}
     volumes:
       - ${DATA_ROOT}/wordpress:/var/www/html
       - ${DATA_ROOT}/nginx/conf:/etc/nginx/conf.d
@@ -21,16 +21,19 @@ services:
     container_name: mariadb
     image: mariadb
     environment:
-      - MARIADB_DATABASE = ${MARIADB_DATABASE}
-      - MARIADB_USER = ${MARIADB_USER}
-      - MARIADB_PASSWORD = ${MARIADB_PASSWORD}
-      - MARIADB_ROOT_PASSWORD = ${MARIADB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${MARIADB_DATABASE}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     volumes:
       - ${DATA_ROOT}/mariadb:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
+      test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized"]
+      start_period: 1m
+      start_interval: 10s
+      interval: 1m
+      timeout: 5s
+      retries: 3
     restart: unless-stopped
 
   wordpress:
@@ -42,10 +45,10 @@ services:
       mariadb:
         condition: service_healthy
     environment:
-      - WORDPRESS_DB_HOST = mariadb
-      - WORDPRESS_DB_NAME = ${MARIADB_DATABASE}
-      - WORDPRESS_DB_USER = ${MARIADB_USER}
-      - WORDPRESS_DB_PASSWORD = ${MARIADB_PASSWORD}
+      - WORDPRESS_DB_HOST=${MARIADB_HOST}
+      - WORDPRESS_DB_NAME=${MARIADB_DATABASE}
+      - WORDPRESS_DB_USER=${MARIADB_USER}
+      - WORDPRESS_DB_PASSWORD=${MARIADB_PASSWORD}
     volumes:
       - ${DATA_ROOT}/wordpress:/var/www/html
     restart: unless-stopped
