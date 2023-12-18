@@ -3,7 +3,6 @@ version: "3.8"
 name: inception
 
 services:
-
   nginx:
     container_name: nginx
     image: nginx
@@ -28,6 +27,27 @@ services:
       - MARIADB_ROOT_PASSWORD = ${MARIADB_ROOT_PASSWORD}
     volumes:
       - ${DATA_ROOT}/mariadb:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    restart: unless-stopped
+
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    depends_on:
+      nginx:
+        condition: service_started
+      mariadb:
+        condition: service_healthy
+    environment:
+      - WORDPRESS_DB_HOST = mariadb
+      - WORDPRESS_DB_NAME = ${MARIADB_DATABASE}
+      - WORDPRESS_DB_USER = ${MARIADB_USER}
+      - WORDPRESS_DB_PASSWORD = ${MARIADB_PASSWORD}
+    volumes:
+      - ${DATA_ROOT}/wordpress:/var/www/html
     restart: unless-stopped
 
 networks:
