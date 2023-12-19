@@ -5,7 +5,15 @@ name: inception
 services:
   nginx:
     container_name: nginx
-    image: nginx
+    image: nginx:42
+    build:
+      context: ./requirements/nginx
+      args:
+        - ALPINE_PENULTIMATE_VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
+    init: true
+    depends_on:
+      wordpress:
+        condition: service_started
     ports:
       - 443:443
     environment:
@@ -40,8 +48,6 @@ services:
     container_name: wordpress
     image: wordpress
     depends_on:
-      nginx:
-        condition: service_started
       mariadb:
         condition: service_healthy
     environment:
