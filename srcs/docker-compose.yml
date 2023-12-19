@@ -10,20 +10,15 @@ services:
       context: ./requirements/nginx
       args:
         - ALPINE_PENULTIMATE_VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
-        - NGINX_HOST=${NGINX_HOST}
+        - NGINX_HOST_DOMAIN=${NGINX_HOST_DOMAIN}
     init: true
     depends_on:
       wordpress:
         condition: service_started
     ports:
       - 443:443
-    environment:
-      - NGINX_HOST=${NGINX_HOST}
-      - NGINX_PORT=${NGINX_PORT}
     volumes:
       - ${DATA_ROOT}/wordpress:/var/www/html
-      - ${DATA_ROOT}/nginx/conf:/etc/nginx/conf.d
-      - ${DATA_ROOT}/nginx/cert:/etc/nginx/ssl
     restart: unless-stopped
 
   mariadb:
