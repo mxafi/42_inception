@@ -10,6 +10,7 @@ services:
       context: ./requirements/nginx
       args:
         - ALPINE_PENULTIMATE_VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
+        - NGINX_HOST=${NGINX_HOST}
     init: true
     depends_on:
       wordpress:
