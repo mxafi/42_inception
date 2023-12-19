@@ -8,7 +8,8 @@ all: up
 
 .PHONY: up
 up:
-	$(COMPOSE_COMMAND_SEQ) up --detach --build
+	$(COMPOSE_COMMAND_SEQ) build --no-cache
+	$(COMPOSE_COMMAND_SEQ) up --detach
 
 .PHONY: down
 down:
@@ -16,7 +17,7 @@ down:
 
 .PHONY: stop
 stop:
-	-docker stop $(shell docker ps -qa) 2> /dev/null
+	$(COMPOSE_COMMAND_SEQ) stop
 
 .PHONY: clean
 clean: stop
