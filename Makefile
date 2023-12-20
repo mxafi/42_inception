@@ -7,9 +7,12 @@ COMPOSE_COMMAND_SEQ	=	docker compose --env-file $(ENV_FILE_PATH) -f $(COMPOSE_FI
 all: up
 
 .PHONY: up
-up:
-	$(COMPOSE_COMMAND_SEQ) build --no-cache
+up: build
 	$(COMPOSE_COMMAND_SEQ) up --detach
+
+.PHONY: build
+build:
+	$(COMPOSE_COMMAND_SEQ) build --no-cache
 
 .PHONY: down
 down:
@@ -24,8 +27,16 @@ clean: stop
 	docker system prune -f
 
 .PHONY: fclean
-fclean: stop
+fclean: stop remove-data
 	docker system prune -af --volumes
 
 .PHONY: reup
 reup: clean up
+
+.PHONY: ps
+ps:
+	$(COMPOSE_COMMAND_SEQ) ps
+
+.PHONY: remove-data
+remove-data:
+	doas rm -rf ../data/*
