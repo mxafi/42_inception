@@ -1,5 +1,6 @@
 COMPOSE_FILE_PATH		= ./srcs/docker-compose.yml
 ENV_FILE_PATH				=	./srcs/.env
+DATA_PATH						= /home/malaakso/data
 
 COMPOSE_COMMAND_SEQ	=	docker compose --env-file $(ENV_FILE_PATH) -f $(COMPOSE_FILE_PATH)
 
@@ -7,7 +8,7 @@ COMPOSE_COMMAND_SEQ	=	docker compose --env-file $(ENV_FILE_PATH) -f $(COMPOSE_FI
 all: up
 
 .PHONY: up
-up: build
+up: create-data-path build
 	$(COMPOSE_COMMAND_SEQ) up --detach
 
 .PHONY: build
@@ -27,7 +28,7 @@ clean: stop
 	docker system prune -f
 
 .PHONY: fclean
-fclean: stop remove-data
+fclean: stop 
 	docker system prune -af --volumes
 
 .PHONY: reup
@@ -37,6 +38,15 @@ reup: clean up
 ps:
 	$(COMPOSE_COMMAND_SEQ) ps
 
-.PHONY: remove-data
-remove-data:
-	doas rm -rf ../data/*
+.PHONY: clean-data
+clean-data: remove-data-path create-data-path
+
+.PHONY: create-data-path
+create-data-path:
+	mkdir -p $(DATA_PATH)/wordpress
+	mkdir -p $(DATA_PATH)/mariadb
+
+.PHONY: remove-data-path
+remove-data-path:
+	doas rm -rf $(DATA_PATH)/wordpress
+	doas rm -rf $(DATA_PATH)/mariadb
