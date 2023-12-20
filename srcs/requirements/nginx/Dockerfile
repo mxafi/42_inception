@@ -19,4 +19,8 @@ RUN apk --no-cache add nginx \
     && ln -sf /proc/1/fd/2 /var/log/nginx/error.log \
     && sed -i "s/<NGINX_HOST_DOMAIN>/${NGINX_HOST_DOMAIN}/g" /etc/nginx/http.d/wordpress.conf \
     && rm -f /etc/nginx/http.d/default.conf
+
+EXPOSE 443/tcp
+EXPOSE 443/udp
+
 CMD ["nginx", "-g", "daemon off;"]
