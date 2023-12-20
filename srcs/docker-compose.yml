@@ -18,7 +18,7 @@ services:
     ports:
       - 443:443
     volumes:
-      - ${DATA_ROOT}/wordpress:/var/www/html
+      - wordpress:/var/www/html
     restart: unless-stopped
 
   mariadb:
@@ -30,7 +30,7 @@ services:
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     volumes:
-      - ${DATA_ROOT}/mariadb:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
       start_period: 1m
@@ -42,7 +42,12 @@ services:
 
   wordpress:
     container_name: wordpress
-    image: wordpress
+    image: wordpress:42
+    build:
+      context: ./requirements/wordpress
+      args:
+        - ALPINE_PENULTIMATE_VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
+    init: true
     depends_on:
       mariadb:
         condition: service_healthy
@@ -52,8 +57,22 @@ services:
       - WORDPRESS_DB_USER=${MARIADB_USER}
       - WORDPRESS_DB_PASSWORD=${MARIADB_PASSWORD}
     volumes:
-      - ${DATA_ROOT}/wordpress:/var/www/html
+      - wordpress:/var/www/html
     restart: unless-stopped
+
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      device: ${DATA_ROOT}/wordpress
+      o: bind
+      type: none
+  mariadb:
+    driver: local
+    driver_opts:
+      device: ${DATA_ROOT}/mariadb
+      o: bind
+      type: none
 
 networks:
   default:
