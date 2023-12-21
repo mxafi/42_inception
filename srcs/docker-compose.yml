@@ -47,15 +47,19 @@ services:
       context: ./requirements/wordpress
       args:
         - ALPINE_PENULTIMATE_VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
+        - HOST_DOMAIN=${NGINX_HOST_DOMAIN}
+        - DB_HOST=${MARIADB_HOST}
+        - DB_NAME=${MARIADB_DATABASE}
+        - DB_USER=${MARIADB_USER}
+        - DB_PASSWORD=${MARIADB_PASSWORD}
+        - SITE_TITLE=${WORDPRESS_TITLE}
+        - ADMIN_USER=${WORDPRESS_ADMIN_USER}
+        - ADMIN_PASSWORD=${WORDPRESS_ADMIN_PASSWORD}
+        - ADMIN_EMAIL=${WORDPRESS_ADMIN_EMAIL}
     init: true
     depends_on:
       mariadb:
         condition: service_healthy
-    environment:
-      - WORDPRESS_DB_HOST=${MARIADB_HOST}
-      - WORDPRESS_DB_NAME=${MARIADB_DATABASE}
-      - WORDPRESS_DB_USER=${MARIADB_USER}
-      - WORDPRESS_DB_PASSWORD=${MARIADB_PASSWORD}
     volumes:
       - wordpress:/var/www/html
     restart: unless-stopped
