@@ -22,7 +22,10 @@ sed -i "s/<NGINX_HOST_DOMAIN>/${NGINX_HOST_DOMAIN}/g" /etc/nginx/http.d/wordpres
 rm -f /etc/nginx/http.d/default.conf
 addgroup -S -g 699 www
 adduser -S -H -g "" -u 699 www -G www
-sed -i "s/user nginx;/www/g" /etc/nginx/nginx.conf
+sed -i "s/user nginx;/user www www;/g" /etc/nginx/nginx.conf
+chown www:www /var/lib/nginx
+chown -R www:www /var/lib/nginx/tmp
+chown -R www:www /var/lib/nginx/html
 EOF
 
 EXPOSE 443/tcp
