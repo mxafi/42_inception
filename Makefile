@@ -69,3 +69,7 @@ create-data-path:
 remove-data-path:
 	doas rm -rf $(DATA_ROOT)/wordpress
 	doas rm -rf $(DATA_ROOT)/mariadb
+
+.PHONY: dev
+dev:
+	docker run --rm -it --name alpine alpine:$(ALPINE_PENULTIMATE_VERSION_TAG) /bin/ash
