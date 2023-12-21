@@ -13,6 +13,9 @@ ARG SITE_TITLE
 ARG ADMIN_USER
 ARG ADMIN_PASSWORD
 ARG ADMIN_EMAIL
+ARG EDITOR_USER
+ARG EDITOR_PASSWORD
+ARG EDITOR_EMAIL
 
 WORKDIR /var/www/html
 
@@ -44,6 +47,9 @@ sed -i "s/<SITE_TITLE>/${SITE_TITLE}/g" /entrypoint.sh
 sed -i "s/<ADMIN_USER>/${ADMIN_USER}/g" /entrypoint.sh
 sed -i "s/<ADMIN_PASSWORD>/${ADMIN_PASSWORD}/g" /entrypoint.sh
 sed -i "s/<ADMIN_EMAIL>/${ADMIN_EMAIL}/g" /entrypoint.sh
+sed -i "s/<EDITOR_USER>/${EDITOR_USER}/g" /entrypoint.sh
+sed -i "s/<EDITOR_PASSWORD>/${EDITOR_PASSWORD}/g" /entrypoint.sh
+sed -i "s/<EDITOR_EMAIL>/${EDITOR_EMAIL}/g" /entrypoint.sh
 chmod +x /entrypoint.sh
 EOF
 

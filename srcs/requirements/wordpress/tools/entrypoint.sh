@@ -12,6 +12,11 @@ if ! /app/wp core is-installed --path=/var/www/html; then
                           --skip-email \
                           --path=/var/www/html \
                           1> /proc/1/fd/1 2> /proc/1/fd/2
+
+    /app/wp user create <EDITOR_USER> <EDITOR_EMAIL> \
+                        --role=editor \
+                        --user_pass=<EDITOR_PASSWORD> \
+                        1> /proc/1/fd/1 2> /proc/1/fd/2
 fi
 
 chown -R www:www /var/www/html
