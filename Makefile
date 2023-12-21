@@ -1,8 +1,9 @@
 COMPOSE_FILE_PATH		= ./srcs/docker-compose.yml
 ENV_FILE_PATH				=	./srcs/.env
-DATA_PATH						= /home/malaakso/data
 
 COMPOSE_COMMAND_SEQ	=	docker compose --env-file $(ENV_FILE_PATH) -f $(COMPOSE_FILE_PATH)
+
+include $(ENV_FILE_PATH)
 
 .PHONY: all
 all: up
@@ -34,19 +35,37 @@ fclean: stop
 .PHONY: reup
 reup: clean up
 
+.PHONY: reup-wordpress
+reup-wordpress:
+	$(COMPOSE_COMMAND_SEQ) build --no-cache wordpress
+	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d wordpress
+
+.PHONY: reup-nginx
+reup-nginx:
+	$(COMPOSE_COMMAND_SEQ) build --no-cache nginx
+	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d nginx
+
+.PHONY: exec-wordpress
+exec-wordpress:
+	docker exec -it wordpress sh
+
+.PHONY: exec-nginx
+exec-nginx:
+	docker exec -it nginx sh
+
 .PHONY: ps
 ps:
 	$(COMPOSE_COMMAND_SEQ) ps
 
 .PHONY: clean-data
-clean-data: remove-data-path create-data-path
+clean-data: clean remove-data-path create-data-path
 
 .PHONY: create-data-path
 create-data-path:
-	mkdir -p $(DATA_PATH)/wordpress
-	mkdir -p $(DATA_PATH)/mariadb
+	mkdir -p $(DATA_ROOT)/wordpress
+	mkdir -p $(DATA_ROOT)/mariadb
 
 .PHONY: remove-data-path
 remove-data-path:
-	doas rm -rf $(DATA_PATH)/wordpress
-	doas rm -rf $(DATA_PATH)/mariadb
+	doas rm -rf $(DATA_ROOT)/wordpress
+	doas rm -rf $(DATA_ROOT)/mariadb
