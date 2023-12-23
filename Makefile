@@ -45,6 +45,11 @@ reup-nginx:
 	$(COMPOSE_COMMAND_SEQ) build --no-cache nginx
 	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d nginx
 
+.PHONY: reup-mariadb
+reup-mariadb:
+	$(COMPOSE_COMMAND_SEQ) build --no-cache mariadb
+	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d mariadb
+
 .PHONY: exec-wordpress
 exec-wordpress:
 	docker exec -it wordpress sh
@@ -52,6 +57,10 @@ exec-wordpress:
 .PHONY: exec-nginx
 exec-nginx:
 	docker exec -it nginx sh
+
+.PHONY: exec-mariadb
+exec-mariadb:
+	docker exec -it mariadb sh
 
 .PHONY: ps
 ps:
