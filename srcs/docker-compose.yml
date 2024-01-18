@@ -27,20 +27,21 @@ services:
     build:
       context: ./requirements/mariadb
       args:
-        - ALPINE_PENULTIMATE_VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
-        - MARIADB_DATABASE=${MARIADB_DATABASE}
-        - MARIADB_USER=${MARIADB_USER}
-        - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+        - VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
+        - DATABASE=${MARIADB_DATABASE}
+        - USER=${MARIADB_USER}
+        - PASSWORD=${MARIADB_PASSWORD}
+        - ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     init: true
     volumes:
       - mariadb:/var/lib/mysql
-    # healthcheck:
-    #   test: ["CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
-    #   start_period: 1m
-    #   start_interval: 5s
-    #   interval: 5s
-    #   timeout: 4s
-    #   retries: 10
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      start_period: 1m
+      start_interval: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
 
   wordpress:
@@ -73,7 +74,7 @@ services:
     init: true
     depends_on:
       mariadb:
-        condition: service_started #service_healthy
+        condition: service_healthy
     volumes:
       - wordpress:/var/www/html
     restart: unless-stopped

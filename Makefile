@@ -35,18 +35,18 @@ fclean: stop
 .PHONY: reup
 reup: clean up
 
-.PHONY: reup-wordpress
-reup-wordpress:
+.PHONY: wordpress
+wordpress:
 	$(COMPOSE_COMMAND_SEQ) build --no-cache wordpress
 	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d wordpress
 
-.PHONY: reup-nginx
-reup-nginx:
+.PHONY: nginx
+nginx:
 	$(COMPOSE_COMMAND_SEQ) build --no-cache nginx
 	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d nginx
 
-.PHONY: reup-mariadb
-reup-mariadb:
+.PHONY: mariadb
+mariadb:
 	$(COMPOSE_COMMAND_SEQ) build --no-cache mariadb
 	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d mariadb
 
