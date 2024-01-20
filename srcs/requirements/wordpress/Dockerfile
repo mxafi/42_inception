@@ -71,4 +71,4 @@ EOF
 
 EXPOSE 9000
 
-CMD ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

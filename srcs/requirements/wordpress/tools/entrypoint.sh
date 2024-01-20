@@ -21,4 +21,4 @@ fi
 
 chown -R www:www /var/www/html
 
-/usr/sbin/php-fpm82 -F
+exec /usr/sbin/php-fpm82 -F
