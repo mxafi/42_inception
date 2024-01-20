@@ -55,6 +55,11 @@ redis:
 	$(COMPOSE_COMMAND_SEQ) build --no-cache redis
 	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d redis
 
+.PHONY: vsftpd
+vsftpd:
+	$(COMPOSE_COMMAND_SEQ) build --no-cache vsftpd
+	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d vsftpd
+
 .PHONY: exec-wordpress
 exec-wordpress:
 	docker exec -it wordpress sh
@@ -70,6 +75,10 @@ exec-mariadb:
 .PHONY: exec-redis
 exec-redis:
 	docker exec -it redis sh
+
+.PHONY: exec-vsftpd
+exec-vsftpd:
+	docker exec -it vsftpd sh
 
 .PHONY: ps
 ps:

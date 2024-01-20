@@ -91,6 +91,16 @@ services:
     init: true
     restart: unless-stopped
 
+  vsftpd:
+    container_name: vsftpd
+    image: vsftpd:42
+    build:
+      context: ./requirements/bonus/vsftpd
+      args:
+        - VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
+    init: true
+    restart: unless-stopped
+
 volumes:
   wordpress:
     driver: local
