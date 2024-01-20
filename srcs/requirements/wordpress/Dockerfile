@@ -16,6 +16,8 @@ ARG ADMIN_EMAIL
 ARG EDITOR_USER
 ARG EDITOR_PASSWORD
 ARG EDITOR_EMAIL
+ARG REDIS_HOST
+ARG REDIS_PREFIX
 ARG AUTH_KEY
 ARG SECURE_AUTH_KEY
 ARG LOGGED_IN_KEY
@@ -36,6 +38,8 @@ sed -i "s/<DB_HOST>/${DB_HOST}/g" /wp-config.php
 sed -i "s/<DB_NAME>/${DB_NAME}/g" /wp-config.php
 sed -i "s/<DB_USER>/${DB_USER}/g" /wp-config.php
 sed -i "s/<DB_PASSWORD>/${DB_PASSWORD}/g" /wp-config.php
+sed -i "s/<REDIS_HOST>/${REDIS_HOST}/g" /wp-config.php
+sed -i "s/<REDIS_PREFIX>/${REDIS_PREFIX}/g" /wp-config.php
 sed -i "s/<AUTH_KEY_UNIQUE>/${AUTH_KEY}/g" /wp-config.php
 sed -i "s/<SECURE_AUTH_KEY_UNIQUE>/${SECURE_AUTH_KEY}/g" /wp-config.php
 sed -i "s/<LOGGED_IN_KEY_UNIQUE>/${LOGGED_IN_KEY}/g" /wp-config.php

@@ -63,6 +63,8 @@ services:
         - EDITOR_USER=${WORDPRESS_EDITOR_USER}
         - EDITOR_PASSWORD=${WORDPRESS_EDITOR_PASSWORD}
         - EDITOR_EMAIL=${WORDPRESS_EDITOR_EMAIL}
+        - REDIS_HOST=${WORDPRESS_REDIS_HOST}
+        - REDIS_PREFIX=${WORDPRESS_REDIS_PREFIX}
         - AUTH_KEY=${WORDPRESS_AUTH_KEY}
         - SECURE_AUTH_KEY=${WORDPRESS_SECURE_AUTH_KEY}
         - LOGGED_IN_KEY=${WORDPRESS_LOGGED_IN_KEY}
@@ -77,6 +79,16 @@ services:
         condition: service_healthy
     volumes:
       - wordpress:/var/www/html
+    restart: unless-stopped
+
+  redis:
+    container_name: redis
+    image: redis:42
+    build:
+      context: ./requirements/bonus/redis
+      args:
+        - VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
+    init: true
     restart: unless-stopped
 
 volumes:

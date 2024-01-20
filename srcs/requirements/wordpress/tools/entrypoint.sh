@@ -17,6 +17,14 @@ if ! /app/wp core is-installed --path=/var/www/html; then
                         --role=editor \
                         --user_pass=<EDITOR_PASSWORD> \
                         1> /proc/1/fd/1 2> /proc/1/fd/2
+
+    /app/wp plugin install redis-cache --activate \
+        1> /proc/1/fd/1 2> /proc/1/fd/2
+
+    /app/wp plugin update --all \
+        1> /proc/1/fd/1 2> /proc/1/fd/2
+    
+    /app/wp redis enable
 fi
 
 chown -R www:www /var/www/html

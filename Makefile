@@ -50,6 +50,11 @@ mariadb:
 	$(COMPOSE_COMMAND_SEQ) build --no-cache mariadb
 	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d mariadb
 
+.PHONY: redis
+redis:
+	$(COMPOSE_COMMAND_SEQ) build --no-cache redis
+	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d redis
+
 .PHONY: exec-wordpress
 exec-wordpress:
 	docker exec -it wordpress sh
@@ -61,6 +66,10 @@ exec-nginx:
 .PHONY: exec-mariadb
 exec-mariadb:
 	docker exec -it mariadb sh
+
+.PHONY: exec-redis
+exec-redis:
+	docker exec -it redis sh
 
 .PHONY: ps
 ps:
