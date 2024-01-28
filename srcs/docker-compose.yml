@@ -108,6 +108,18 @@ services:
       - wordpress:/var/www/html
     restart: unless-stopped
 
+  adminer:
+    container_name: adminer
+    image: adminer:42
+    build:
+      context: ./requirements/bonus/adminer
+      args:
+        - VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
+    init: true
+    ports:
+      - 8000:80
+    restart: unless-stopped
+
 volumes:
   wordpress:
     driver: local

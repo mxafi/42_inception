@@ -60,6 +60,11 @@ vsftpd:
 	$(COMPOSE_COMMAND_SEQ) build --no-cache vsftpd
 	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d vsftpd
 
+.PHONY: adminer
+adminer:
+	$(COMPOSE_COMMAND_SEQ) build --no-cache adminer
+	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d adminer
+
 .PHONY: exec-wordpress
 exec-wordpress:
 	docker exec -it wordpress sh
@@ -79,6 +84,10 @@ exec-redis:
 .PHONY: exec-vsftpd
 exec-vsftpd:
 	docker exec -it vsftpd sh
+
+.PHONY: exec-adminer
+exec-adminer:
+	docker exec -it adminer sh
 
 .PHONY: ps
 ps:
