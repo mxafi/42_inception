@@ -17,6 +17,7 @@ services:
         condition: service_started
     ports:
       - 443:443
+      - 8000:8000
     volumes:
       - wordpress:/var/www/html
     restart: unless-stopped
@@ -116,8 +117,6 @@ services:
       args:
         - VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
     init: true
-    ports:
-      - 8000:80
     restart: unless-stopped
 
 volumes:

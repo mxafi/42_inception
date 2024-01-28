@@ -14,6 +14,7 @@ ARG NGINX_HOST_DOMAIN
 
 COPY --from=cert-builder /cert-build /etc/nginx/ssl
 COPY ./conf/wordpress.conf /etc/nginx/http.d/wordpress.conf
+COPY ./conf/adminer.conf /etc/nginx/http.d/adminer.conf
 RUN <<EOF
 apk --no-cache add nginx
 ln -sf /proc/1/fd/1 /var/log/nginx/access.log
