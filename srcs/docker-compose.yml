@@ -118,6 +118,19 @@ services:
         - VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
     init: true
     restart: unless-stopped
+  
+  hugo:
+    container_name: hugo
+    image: hugo:42
+    build:
+      context: ./requirements/bonus/hugo
+      args:
+        - VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
+        - SITE_BASEURL=${HUGO_SITE_BASEURL}
+    init: true
+    ports:
+      - 8001:80
+    restart: unless-stopped
 
 volumes:
   wordpress:

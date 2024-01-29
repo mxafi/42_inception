@@ -65,6 +65,11 @@ adminer:
 	$(COMPOSE_COMMAND_SEQ) build --no-cache adminer
 	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d adminer
 
+.PHONY: hugo
+hugo:
+	$(COMPOSE_COMMAND_SEQ) build --no-cache hugo
+	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d hugo
+
 .PHONY: exec-wordpress
 exec-wordpress:
 	docker exec -it wordpress sh
@@ -88,6 +93,10 @@ exec-vsftpd:
 .PHONY: exec-adminer
 exec-adminer:
 	docker exec -it adminer sh
+
+.PHONY: exec-hugo
+exec-hugo:
+	docker exec -it hugo sh
 
 .PHONY: ps
 ps:
