@@ -20,6 +20,7 @@ services:
       - 8000:8000
     volumes:
       - wordpress:/var/www/html
+      - nginx-logs:/var/log/nginx
     restart: unless-stopped
 
   mariadb:
@@ -143,6 +144,12 @@ volumes:
     driver: local
     driver_opts:
       device: ${DATA_ROOT}/mariadb
+      o: bind
+      type: none
+  nginx-logs:
+    driver: local
+    driver_opts:
+      device: ${DATA_ROOT}/nginx-logs
       o: bind
       type: none
 

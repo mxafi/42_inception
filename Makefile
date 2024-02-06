@@ -109,11 +109,13 @@ clean-data: clean remove-data-path create-data-path
 create-data-path:
 	mkdir -p $(DATA_ROOT)/wordpress
 	mkdir -p $(DATA_ROOT)/mariadb
+	mkdir -p $(DATA_ROOT)/nginx-logs
 
 .PHONY: remove-data-path
 remove-data-path:
 	doas rm -rf $(DATA_ROOT)/wordpress
 	doas rm -rf $(DATA_ROOT)/mariadb
+	doas rm -rf $(DATA_ROOT)/nginx-logs
 
 .PHONY: dev
 dev:
