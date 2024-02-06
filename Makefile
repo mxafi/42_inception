@@ -119,5 +119,5 @@ remove-data-path:
 
 .PHONY: dev
 dev:
-	docker stop alpine &> /dev/null || true
+	docker rm -f alpine &> /dev/null
 	docker run --rm -it --name alpine alpine:$(ALPINE_PENULTIMATE_VERSION_TAG) /bin/ash
