@@ -138,6 +138,8 @@ services:
       args:
         - VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
     init: true
+    ports:
+      - 8002:80
     volumes:
       - nginx-logs:/var/log/nginx
     restart: unless-stopped

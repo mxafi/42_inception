@@ -39,11 +39,17 @@ FROM alpine:${VERSION_TAG}
 
 COPY --from=builder /dist /
 COPY ./tools/entrypoint.sh /usr/local/bin/
+COPY ./conf/lighttpd.conf /etc/lighttpd/lighttpd.conf
 
 RUN <<EOF
 chmod +x /usr/local/bin/entrypoint.sh
+apk --no-cache add lighttpd 
+mkdir -p /run/lighttpd
+mkdir -p /var/www/html
 EOF
 
-EXPOSE 7890
+EXPOSE 80
+
 ENTRYPOINT ["entrypoint.sh"]
-CMD ["goaccess --help"]
+CMD ["goaccess", "/var/log/nginx/access.log", "--log-format=COMBINED", "-o", "/var/www/html/report.html", "--real-time-html"]
+
