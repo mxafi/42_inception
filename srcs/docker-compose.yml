@@ -130,6 +130,18 @@ services:
       - 8001:80
     restart: unless-stopped
 
+  goaccess:
+    container_name: goaccess
+    image: goaccess:42
+    build:
+      context: ./requirements/bonus/goaccess
+      args:
+        - VERSION_TAG=${ALPINE_PENULTIMATE_VERSION_TAG}
+    init: true
+    volumes:
+      - nginx-logs:/var/log/nginx
+    restart: unless-stopped
+
 volumes:
   wordpress:
     driver: local

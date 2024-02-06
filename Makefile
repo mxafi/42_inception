@@ -70,6 +70,11 @@ hugo:
 	$(COMPOSE_COMMAND_SEQ) build --no-cache hugo
 	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d hugo
 
+.PHONY: goaccess
+goaccess:
+	$(COMPOSE_COMMAND_SEQ) build --no-cache goaccess
+	$(COMPOSE_COMMAND_SEQ) up --force-recreate --no-deps -d goaccess
+
 .PHONY: exec-wordpress
 exec-wordpress:
 	docker exec -it wordpress sh
@@ -97,6 +102,10 @@ exec-adminer:
 .PHONY: exec-hugo
 exec-hugo:
 	docker exec -it hugo sh
+
+.PHONY: exec-goaccess
+exec-goaccess:
+	docker exec -it goaccess sh
 
 .PHONY: ps
 ps:
