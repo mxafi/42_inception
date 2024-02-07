@@ -12,7 +12,7 @@ log_error() {
 
 temp_server_start() {
   log_info "Starting temporary server"
-  mariadbd --skip-networking --socket=/run/mysqld/mysqld.sock --expire-logs-days=0 --loose-innodb_buffer_pool_load_at_startup=0 & ash
+  mariadbd --skip-networking --socket=/run/mysqld/mysqld.sock --expire-logs-days=0 --loose-innodb_buffer_pool_load_at_startup=0 &
   TEMP_SERVER_PID=$!
   i=30
   while [ $i -gt 0 ]; do
