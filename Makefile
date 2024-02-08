@@ -14,7 +14,7 @@ up: create-data-path build
 
 .PHONY: build
 build:
-	$(COMPOSE_COMMAND_SEQ) build --no-cache
+	$(COMPOSE_COMMAND_SEQ) build
 
 .PHONY: down
 down:
